@@ -8,7 +8,7 @@ import {
     Default,
     AutoIncrement,
     CreatedAt,
-    UpdatedAt, BelongsToMany
+    UpdatedAt, BelongsToMany, HasMany
 } from 'sequelize-typescript';
 import {DataTypes} from "sequelize";
 import Detail from "../detail/Detail.model";
@@ -35,8 +35,8 @@ class Product extends Model<Product>{
     @Column
     name: string;
 
-    @BelongsToMany(() => Detail, ()=> ProductToDetail, 'productId')
-    detail?: Detail[];
+    @HasMany(() => ProductToDetail)
+    productToDetail: ProductToDetail[];
 
     @CreatedAt
     readonly createdAt?: Date;

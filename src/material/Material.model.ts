@@ -13,10 +13,18 @@ import {
 import {DataTypes} from "sequelize";
 import Detail from "../detail/Detail.model";
 
+
+export interface CreateMaterialI{
+    name: string;
+    price: number;
+}
+
+
+
 @Table({
     tableName: 'Material'
 })
-class Material extends Model<Material>{
+class Material extends Model{
     @IsUUID(4)
     @PrimaryKey
     @Unique

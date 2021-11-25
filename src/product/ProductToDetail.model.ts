@@ -8,7 +8,7 @@ import {
     Default,
     AutoIncrement,
     CreatedAt,
-    UpdatedAt, ForeignKey, AllowNull
+    UpdatedAt, ForeignKey, AllowNull, BelongsTo
 } from 'sequelize-typescript';
 import {DataTypes} from "sequelize";
 import {Col} from "sequelize/types/lib/utils";
@@ -34,14 +34,25 @@ class ProductToDetail extends Model<ProductToDetail>{
     idInt?: number;
 
     @ForeignKey(() => Product)
-    @Column
     @AllowNull(false)
+    @Column
     productId: string;
+    @BelongsTo(() => Product)
+    product?: Product;
 
     @ForeignKey(() => Detail)
-    @Column
     @AllowNull(false)
+    @Column
     detailId: string;
+    @BelongsTo(()=> Detail)
+    detail?: Detail;
+
+    // this is for count details on Product
+    @AllowNull(false)
+    @Column
+    counter: number;
+
+
 
     @CreatedAt
     readonly createdAt?: Date;

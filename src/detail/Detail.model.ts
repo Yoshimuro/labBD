@@ -8,16 +8,25 @@ import {
     Default,
     AutoIncrement,
     CreatedAt,
-    UpdatedAt, BelongsTo
+    UpdatedAt, BelongsTo, HasMany, HasOne, ForeignKey, AllowNull
 } from 'sequelize-typescript';
 import {DataTypes} from "sequelize";
-import exp from "constants";
 import Material from "../material/Material.model";
+import ProductToDetail from "../product/ProductToDetail.model";
+
+
+export interface createDetailI {
+    name: string;
+    weight: number;
+    materialId: string;
+}
+
+
 
 @Table({
     tableName: 'Detail'
 })
-class Detail extends Model<Detail>{
+class Detail extends Model{
     @IsUUID(4)
     @PrimaryKey
     @Unique
@@ -38,8 +47,15 @@ class Detail extends Model<Detail>{
     @Column
     weight: number;
 
+    @ForeignKey(() => Material)
+    @AllowNull(false)
+    @Column
+    materialId: string;
+
     @BelongsTo(() => Material)
     material?: Material[];
+    @HasOne(() => ProductToDetail)
+    productToDetail: ProductToDetail;
 
     @CreatedAt
     readonly createdAt?: Date;
